@@ -1,3 +1,6 @@
-<h1>StaticPages#home</h1>
-<div id="typing"></div>
-<%= javascript_include_tag "webpack/bundle" %>
+<% provide(:title, "Home") %>
+<% if logged_in? %>
+    <%= render 'static_pages/user_top' %>
+<% else %>
+    <%= render 'static_pages/welcome' %>
+<% end %>
