@@ -24,3 +24,5 @@
 app/assets/javascripts/webpack
 yarn.lock
 public/assets
+
+.history

@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  entry: './frontend/index.js',
+  entry: './app/frontend/index.js',
   output: {
     path: path.join(__dirname, 'app/assets/javascripts/webpack'),
     filename: 'bundle.js'
