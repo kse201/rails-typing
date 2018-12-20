@@ -1,0 +1,12 @@
+<% @top_record.each do |score| %>
+<ol id="score-<%= score.id %>">
+    <%= link_to gravatar_for(score.user, size: 50), score.user %>
+    <span class="user">
+        <%= link_to score.user.name, score.user %>
+    </span>
+    <span class="point">
+        Score: <%= score.point %>
+</span>
+</ol>
+<% end %>
+<%= will_paginate @top_record %>

@@ -104,4 +104,8 @@ class UserTest < ActiveSupport::TestCase
       @user.destroy
     end
   end
+
+  test 'get user high score' do
+    assert_equal users(:michael).high_score, scores(:high_score).point
+  end
 end

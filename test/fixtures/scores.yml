@@ -3,14 +3,19 @@
 one:
   point: 1
   created_at: <%= 10.minutes.ago %>
-  user: micheal
+  user: michael
 
 two:
   point: 2
   created_at: <%= 3.minutes.ago %>
-  user: micheal
+  user: michael
 
 most_recent:
   point: 50
   created_at: <%= Time.zone.now %>
-  user: micheal
+  user: michael
+
+high_score:
+  point: 99
+  created_at: <%= Time.zone.now %>
+  user: michael

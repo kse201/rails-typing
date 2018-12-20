@@ -67,9 +67,9 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def feed
-    following_ids = 'SELECT followed_id FROM relationships WHERE follower_id = :user_id'
-    # Scores.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+  def high_score
+    high_score = scores.sort_by(&:point).last
+    high_score.point if high_score
   end
 
   private

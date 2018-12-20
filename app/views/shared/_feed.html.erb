@@ -1,0 +1,6 @@
+<% if @scores.any? %>
+<ol class="scores">
+    <% render @scores %>
+</ol>
+<%= will_paginage @scores %>
+<% end %>

@@ -28,4 +28,6 @@ Rails.application.routes.draw do
 
   resources :account_activations, only: %i[edit]
   resources :scores, only: %i[create]
+
+  get '/ranking', to: 'static_pages#ranking'
 end

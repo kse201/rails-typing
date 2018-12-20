@@ -7,8 +7,19 @@
                 <%= @user.name %>
             </h1>
         </section>
+
+        <div> High Score: <%= current_user.high_score %> </div>
     </aside>
-    <section class="stats">
+    <div class="col-md-8 stats">
         <%= render 'shared/stats' %>
-    </section>
+    </div>
+    <div class="col-md-8">
+        <% if @user.scores.any? %>
+        <h3>Scores(<%= @user.scores.count %>)</h3>
+        <ol class="scores">
+            <%= render @scores %>
+        </ol>
+        <%= will_paginate @scores %>
+        <% end %>
+    </div>
 </div>

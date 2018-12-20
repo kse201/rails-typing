@@ -6,4 +6,6 @@ class Score < ApplicationRecord
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100
   }
+
+  scope :top_record, ->(top = 10) { unscoped.order('point DESC').limit(top) }
 end
