@@ -2,7 +2,7 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_create :create_activation_digest
   attr_accessor :remember_token, :activation_token, :reset_token
-  # has_many :microposts, dependent: :destroy
+  has_many :scores, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :name, presence: true, length: { maximum: 50 }
@@ -69,7 +69,7 @@ class User < ApplicationRecord
 
   def feed
     following_ids = 'SELECT followed_id FROM relationships WHERE follower_id = :user_id'
-    # Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+    # Scores.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
   private

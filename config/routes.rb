@@ -27,6 +27,5 @@ Rails.application.routes.draw do
   get '/contact', to: 'static_pages#contact'
 
   resources :account_activations, only: %i[edit]
-  resources :microposts, only: %i[create destroy]
-  resources :relationships, only: %i[create destroy]
+  resources :scores, only: %i[create]
 end

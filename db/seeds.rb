@@ -22,8 +22,7 @@ User.create(name: 'Exampe Uesr',
     )
 end
 
-# users = User.order(:created_at).take(6)
-# 50.times do
-  # content = Faker::Lorem.sentence(5)
-  # users.each { |user| user.microposts.create!(content: content) }
-# end
+users = User.order(:created_at).take(6)
+50.times do
+  users.each { |user| user.scores.create!(point: Random.rand(100)) }
+end
