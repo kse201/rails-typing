@@ -11,9 +11,5 @@ class RankingTest < ActionDispatch::IntegrationTest
     get ranking_path
     records = Score.top_record(10)
     assert_template 'static_pages/ranking'
-
-    records.each do |record|
-      assert_select 'a[href=?]', user_path(record.user), count: 1
-    end
   end
 end
