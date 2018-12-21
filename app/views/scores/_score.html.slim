@@ -1,0 +1,5 @@
+li id="score-#{score.id}"
+  span.point
+    |  Score: #{score.point}
+  span.timestamp
+    |  created #{time_ago_in_words(score.created_at)} ago.

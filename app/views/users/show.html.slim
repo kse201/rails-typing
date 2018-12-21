@@ -1,0 +1,18 @@
+- provide(:title, @user.name)
+.row
+  aside.col-md-4
+    section.user_info
+      h1
+        = gravatar_for @user
+        = @user.name
+    div
+      | High Score: #{current_user.high_score}
+  .col-md-8.stats
+    = render 'shared/stats'
+  .col-md-8
+    - if @user.scores.any?
+      h3
+        | Scores(#{@user.scores.count})
+      ol.scores
+        = render @scores
+      = will_paginate @scores
