@@ -45,6 +45,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "axios": "^0.18.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "deep-extend": ">=0.5.1"
   }
 }
