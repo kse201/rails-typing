@@ -1,5 +1,7 @@
 # README
 
+[![Build Status](https://travis-ci.com/kse201/rails-typing.svg?branch=master)](https://travis-ci.com/kse201/rails-typing)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
