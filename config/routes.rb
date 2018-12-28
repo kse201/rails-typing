@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :password_resets, only: %i[new create edit update]
 
   root to: 'static_pages#home'
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
 
   resources :account_activations, only: %i[edit]
   resources :scores, only: %i[create]
+  resources :texts, only: :index
 
   get '/ranking', to: 'static_pages#ranking'
 end

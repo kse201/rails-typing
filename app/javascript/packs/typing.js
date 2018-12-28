@@ -4,23 +4,9 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-const time = process.env.APP_DEBUG ? 60 : 30
+import axios from 'axios'
+const time = 60 * 3
 const interval = 100
-
-const words = [
-  {
-    word: 'foo',
-    mean: 'foo'
-  },
-  {
-    word: 'bar',
-    mean: 'bar'
-  },
-  {
-    word: 'foobar',
-    mean: 'foobar'
-  }
-]
 
 export default class Typing extends React.Component {
   constructor (props) {
@@ -32,17 +18,29 @@ export default class Typing extends React.Component {
       word_index: 0,
       isLive: false,
       score: 0,
-      miss: 0,
       sec: 0,
       timer: null
     }
     this.timerId = 0
     this.start = this.start.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
+
+    axios.get('/texts')
+      .then((result) => {
+        this.setState({
+          words: result.data
+        })
+      })
+      .catch((data) => {
+        console.error(data)
+      })
   }
 
   componentWillMount () {
     document.addEventListener('keyup', (e) => { this.handleKeyUp(e) })
+    this.setState({
+      csrf: document.getElementsByName('csrf-token').item(0).content
+    })
   }
 
   tick () {
@@ -58,13 +56,13 @@ export default class Typing extends React.Component {
 
   nextText () {
     const idx = this.state.word_index + 1
-    if (idx === words.length) {
+    if (idx === this.state.words.length) {
       this.finish()
     }
 
     this.setState({
-      target: words[idx].word,
-      mean: words[idx].mean,
+      target: this.state.words[idx].word,
+      mean: this.state.words[idx].mean,
       char_index: 0,
       word_index: idx
     })
@@ -87,9 +85,8 @@ export default class Typing extends React.Component {
     }
     const idx = 0
     this.setState({
-      target: words[idx].word,
-      mean: words[idx].mean,
-      miss: 0,
+      target: this.state.words[idx].word,
+      mean: this.state.words[idx].mean,
       score: 0,
       char_index: 0,
       word_index: 0,
@@ -109,7 +106,6 @@ export default class Typing extends React.Component {
       char_index: 0,
       isLive: false,
       score: 0,
-      miss: 0,
       timer: null
     })
 
@@ -122,20 +118,19 @@ export default class Typing extends React.Component {
     }
 
     if (this.isCorrectKey(e.key)) {
-      const score = this.state.score + 1
       let idx = this.state.char_index + 1
 
       this.setState({
-        score: score,
         char_index: idx
       })
 
       if (this.state.char_index >= this.state.target.length) {
+        const score = this.state.score + 1
+        this.setState({
+          score: score
+        })
         this.nextText()
       }
-    } else {
-      const miss = this.state.miss + 1
-      this.setState({miss: miss})
     }
   }
 
@@ -151,9 +146,19 @@ export default class Typing extends React.Component {
 
   result () {
     const score = this.state.score
-    const miss = this.state.miss
-    const accuracy = (score + miss) === 0 ? '0.00' : ((score / (score + miss)) * 100).toFixed(2)
-    alert(score + ' letters, ' + miss + ' miss! ' + accuracy + ' % accuracy')
+    const point = ((score / this.state.words.length) * 100).toFixed(2)
+
+    axios.defaults.headers.common['X-CSRF-Token'] = this.state.csrf
+    axios.post('/scores', {
+      score: {
+        point: point
+      }})
+      .then((result) => {
+        console.log(result)
+      })
+      .catch((data) => {
+        console.error(data)
+      })
   }
 
   targetWord () {
@@ -178,7 +183,6 @@ export default class Typing extends React.Component {
         <div className='info'>
           <div>Mean: {this.state.mean}</div>
           <div>Letters count: {this.state.score}</div>
-          <div>Miss count: {this.state.miss}</div>
           <div>Remining Time: {this.state.sec}</div>
         </div>
       </div>
